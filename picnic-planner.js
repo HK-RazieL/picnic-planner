@@ -3,7 +3,7 @@
 const https = require("https");
 const MIN_TEMP = 10;
 const ACCEPTABLE_WEATHER = ["Heavy Cloud", "Light Cloud", "Clear"];
-const INPUT = process.argv[2];
+const INPUT = process.argv.slice(2).join("%20");
 
 function getRequestData(url) {
     return new Promise((resolve, reject) => {
@@ -48,18 +48,18 @@ function checkWeather(day) {
     }
     return {
         highestTemp,
-        bestWeather: bestWeatherIndex
+        bestWeatherIndex
     };
 }
 
 function compareWeather(saturday, sunday) {
     let name;
     let reasons = [];
-    if (saturday.bestWeather === sunday.bestWeather) {
+    if (saturday.bestWeatherIndex === sunday.bestWeatherIndex) {
         name = saturday.highestTemp > sunday.highestTemp ? "Saturday" : "Sunday"
         reasons.push("warmer")
-    } else if (saturday.bestWeather > sunday.bestWeather) {
-        name = saturday.bestWeather > sunday.bestWeather ? "Saturday" : "Sunday"
+    } else if (saturday.bestWeatherIndex > sunday.bestWeatherIndex) {
+        name = saturday.bestWeatherIndex > sunday.bestWeatherIndex ? "Saturday" : "Sunday"
         reasons.push("better weather")
     }
 
