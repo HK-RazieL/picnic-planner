@@ -59,8 +59,17 @@ function compareWeather(saturday, sunday) {
     let saturdayReasons = [];
     let sundayReasons = [];
 
-    saturday.highestTemp > sunday.highestTemp ? saturdayReasons.push("warmer") : sundayReasons.push("warmer");
-    saturday.bestWeatherIndex >= sunday.bestWeatherIndex ? saturdayReasons.push("better weather") : sundayReasons.push("better weather");
+    if (weather.saturday.highestTemp > weather.sunday.highestTemp) {
+        saturdayReasons.push("warmer");
+    } else {
+        sundayReasons.push("warmer");
+    }
+
+    if (weather.saturday.bestWeatherIndex >= weather.sunday.bestWeatherIndex) {
+        saturdayReasons.push("better weather");
+    } else {
+        sundayReasons.push("better weather");
+    }
 
     return {
         name: saturdayReasons.length > sundayReasons.length ? "Saturday" : "Sunday",
