@@ -56,27 +56,23 @@ function checkWeather(day) {
 }
 
 function compareWeather(saturday, sunday) {
-    let name;
-    let reasons = [];
-    if (saturday.bestWeatherIndex === sunday.bestWeatherIndex) {
-        name = saturday.highestTemp > sunday.highestTemp ? "Saturday" : "Sunday"
-        reasons.push("warmer")
-    } else if (saturday.bestWeatherIndex > sunday.bestWeatherIndex) {
-        name = saturday.bestWeatherIndex > sunday.bestWeatherIndex ? "Saturday" : "Sunday"
-        reasons.push("better weather")
-    }
+    let saturdayReasons = [];
+    let sundayReasons = [];
+
+    saturday.highestTemp > sunday.highestTemp ? saturdayReasons.push("warmer") : sundayReasons.push("warmer");
+    saturday.bestWeatherIndex >= sunday.bestWeatherIndex ? saturdayReasons.push("better weather") : sundayReasons.push("better weather");
 
     return {
-        name,
-        reasons
+        name: saturdayReasons.length > sundayReasons.length ? "Saturday" : "Sunday",
+        reasons: saturdayReasons.length > sundayReasons.length ? saturdayReasons : sundayReasons
     }
 }
 
 function printingResults(saturday, sunday) {
     if (saturday && sunday) {
         const betterDay = compareWeather(saturday, sunday)
-        console.log(`This weekend looks nice for a picnic, ${betterDay.name} is best because it's ${betterDay.reasons.length > 1 ?
-        betterDay.reasons[0] + "and" + betterDay.reasons[1] : betterDay.reasons[0]}.`);
+        console.log(`This weekend looks nice for a picnic, ${betterDay.name} is best because it's ${betterDay.reasons.length === 1 ? 
+            betterDay.reasons[0] : betterDay.reasons[0] + " and " + betterDay.reasons[1]}.`);
     } else if (saturday || sunday) {
         console.log(`You should have your picnic on ${saturday ? "Saturday" : "Sunday"}`);
     } else {
